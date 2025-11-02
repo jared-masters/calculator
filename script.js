@@ -1,9 +1,10 @@
 const buttonsGrid = document.querySelector(".buttons-grid");
 const inputView = document.querySelector(".input-view");
 
-let num1 = 0;
-let num2 = 0;
+let num1 = null;
+let num2 = null;
 let operator = "";
+let resultDisplayed = false;
 
 function add(a, b) {
     return a + b;
@@ -18,7 +19,11 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return a / b;
+    if (b === 0) {
+        resetValues();
+        return "Error"
+    }
+    return Math.round((a / b) * 100) / 100;
 }
 
 function operate(a, b, operator) {
@@ -27,7 +32,21 @@ function operate(a, b, operator) {
         case "-": return subtract(a, b);
         case "*": return multiply(a, b);
         case "/": return divide(a, b);
+        default: return 0;
     }
+}
+
+function resetValues() {
+    num1 = null;
+    num2 = null;
+    operator = "";
+}
+
+function triggerResult() {
+    const currentResult = operate(num1, num2, operator);
+    inputView.textContent = currentResult;
+    num1 = currentResult;
+    num2 = null;
 }
 
 buttonsGrid.addEventListener("mouseover", e => {
@@ -44,9 +63,10 @@ buttonsGrid.addEventListener("mouseout", e => {
 
 buttonsGrid.addEventListener("click", e => {
     if (e.target.classList.contains("button-number")) {
-        if (inputView.textContent == "0" ||
-            (operator != "" && Number(inputView.textContent) == num1)
+        if (inputView.textContent == "0" || inputView.textContent == "Error" ||
+            (operator != "" && Number(inputView.textContent) == num1) || resultDisplayed === true
         ) {
+            resultDisplayed = false;
             inputView.textContent = e.target.textContent;
         } else {
             inputView.textContent += e.target.textContent;
@@ -60,17 +80,21 @@ buttonsGrid.addEventListener("click", e => {
     }
 
     if (e.target.classList.contains("operator")) {
-        operator = e.target.textContent;
+        if (num1 != null ) {
+            if (num2 != null) {
+                triggerResult();
+            }
+            operator = e.target.textContent;
+        }
     }
 
     if (e.target.classList.contains("result")) {
-        inputView.textContent = operate(num1, num2, operator);
+        resultDisplayed = true;
+        triggerResult();
     }
 
     if (e.target.classList.contains("button-clear")) {
         inputView.textContent = "0";
-        num1 = 0;
-        num2 = 0;
-        operator = 0;
+        resetValues();
     }
 })
