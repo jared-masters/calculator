@@ -15,9 +15,13 @@ body {
 }
 
 .input-view {
-    height: 10vh;
+    display: flex;
+    justify-content: flex-end;
+    padding: 8px 16px;
+    align-items: center;
     background-color: lightgray;
     border-radius: 8px;
+    font-size: 60px;
 }
 
 .buttons-grid,
@@ -41,8 +45,9 @@ body {
 }
 
 .button {
+    border: 0px;
     border-radius: 8px;
-    width: 8vw;
+    width: 7vw;
     height: 8vh;
-    font-size: 24px;
+    font-size: 20px;
 }
