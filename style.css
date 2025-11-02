@@ -50,4 +50,6 @@ body {
     width: 7vw;
     height: 8vh;
     font-size: 20px;
+    background-color: rgb(225, 225, 225);
+    cursor: pointer;
 }
