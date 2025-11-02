@@ -1,0 +1,48 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.calculator-container {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid black;
+    border-radius: 8px;
+    gap: 8px;
+    padding: 8px;
+}
+
+.input-view {
+    height: 10vh;
+    background-color: lightgray;
+    border-radius: 8px;
+}
+
+.buttons-grid,
+.regular-container,
+.operator-container,
+.numbers-row {
+    display: flex;
+    gap: 4px;
+}
+
+.regular-container {
+    flex-direction: column;
+}
+
+.numbers-row {
+    justify-content: center;
+}
+
+.operator-container {
+    flex-direction: column;
+}
+
+.button {
+    border-radius: 8px;
+    width: 8vw;
+    height: 8vh;
+    font-size: 24px;
+}
