@@ -61,6 +61,18 @@ buttonsGrid.addEventListener("mouseout", e => {
     }
 });
 
+buttonsGrid.addEventListener("mousedown", e => {
+    if (e.target.classList.contains("button")) {
+        e.target.style.scale = 0.98;
+    }
+});
+
+buttonsGrid.addEventListener("mouseup", e => {
+    if (e.target.classList.contains("button")) {
+        e.target.style.scale = 1.0;
+    }
+});
+
 buttonsGrid.addEventListener("click", e => {
     if (e.target.classList.contains("button-number")) {
         if (inputView.textContent == "0" || inputView.textContent == "Error" ||
