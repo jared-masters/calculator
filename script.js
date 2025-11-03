@@ -7,15 +7,15 @@ let operator = "";
 let resultDisplayed = false;
 
 function add(a, b) {
-    return a + b;
+    return Math.round((a + b) * 100) / 100;
 }
 
 function subtract(a, b) {
-    return a - b;
+    return Math.round((a - b) * 100) / 100;
 }
 
 function multiply(a, b) {
-    return a * b;
+    return Math.round((a * b) * 100) / 100;
 }
 
 function divide(a, b) {
@@ -74,7 +74,14 @@ buttonsGrid.addEventListener("mouseup", e => {
 });
 
 buttonsGrid.addEventListener("click", e => {
-    if (e.target.classList.contains("button-number")) {
+    if (e.target.classList.contains("button-number") ||
+        e.target.classList.contains("button-decimal")) {
+
+        if (e.target.classList.contains("button-decimal") &&
+            inputView.textContent.includes(".")) {
+            return;
+        }
+
         if (inputView.textContent == "0" || inputView.textContent == "Error" ||
             (operator != "" && Number(inputView.textContent) == num1) || resultDisplayed === true
         ) {
