@@ -50,6 +50,7 @@ function triggerResult() {
     inputView.textContent = currentResult;
     num1 = currentResult;
     num2 = null;
+    operator = "";
 }
 
 function numberOrDecimalActivated(value) {
