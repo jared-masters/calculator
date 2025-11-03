@@ -1,10 +1,13 @@
+const body = document.querySelector("body");
 const buttonsGrid = document.querySelector(".buttons-grid");
 const inputView = document.querySelector(".input-view");
+const numberButtons = document.querySelectorAll(".button-number");
 
 let num1 = null;
 let num2 = null;
 let operator = "";
 let resultDisplayed = false;
+let isKeyDown = false;
 
 function add(a, b) {
     return Math.round((a + b) * 100) / 100;
@@ -49,6 +52,23 @@ function triggerResult() {
     num2 = null;
 }
 
+function numberOrDecimalActivated(value) {
+    if (inputView.textContent == "0" || inputView.textContent == "Error" ||
+        (operator != "" && num2 == null) || resultDisplayed === true
+    ) {
+        resultDisplayed = false;
+        inputView.textContent = value;
+    } else {
+        inputView.textContent += value;
+    }
+
+    if (operator == "") {
+        num1 = Number(inputView.textContent);
+    } else {
+        num2 = Number(inputView.textContent);
+    }
+}
+
 buttonsGrid.addEventListener("mouseover", e => {
     if (e.target.classList.contains("button")) {
         e.target.style.backgroundColor = "lightgray";
@@ -82,20 +102,8 @@ buttonsGrid.addEventListener("click", e => {
             return;
         }
 
-        if (inputView.textContent == "0" || inputView.textContent == "Error" ||
-            (operator != "" && num2 == null) || resultDisplayed === true
-        ) {
-            resultDisplayed = false;
-            inputView.textContent = e.target.textContent;
-        } else {
-            inputView.textContent += e.target.textContent;
-        }
-
-        if (operator == "") {
-            num1 = Number(inputView.textContent);
-        } else {
-            num2 = Number(inputView.textContent);
-        }
+        numberOrDecimalActivated(e.target.textContent);
+        
     }
 
     if (e.target.classList.contains("operator")) {
@@ -130,4 +138,15 @@ buttonsGrid.addEventListener("click", e => {
             inputView.textContent = num2;
         }
     }
-})
+});
+
+body.addEventListener("keydown", e => {
+    if ("1234567890.".includes(e.key)) {
+        numberOrDecimalActivated(e.key);
+    }
+    isKeyDown = true;
+});
+
+body.addEventListener("keyup", e => {
+    isKeyDown = false;
+});
