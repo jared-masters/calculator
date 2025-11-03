@@ -83,7 +83,7 @@ buttonsGrid.addEventListener("click", e => {
         }
 
         if (inputView.textContent == "0" || inputView.textContent == "Error" ||
-            (operator != "" && Number(inputView.textContent) == num1) || resultDisplayed === true
+            (operator != "" && num2 == null) || resultDisplayed === true
         ) {
             resultDisplayed = false;
             inputView.textContent = e.target.textContent;
