@@ -116,4 +116,18 @@ buttonsGrid.addEventListener("click", e => {
         inputView.textContent = "0";
         resetValues();
     }
+
+    if (e.target.classList.contains("button-delete")) {
+        if (resultDisplayed) {
+            return;
+        }
+        
+        if (operator == "") {
+            num1 = Math.floor(num1 / 10);
+            inputView.textContent = num1;
+        } else {
+            num2 = Math.floor(num2 / 10);
+            inputView.textContent = num2;
+        }
+    }
 })
