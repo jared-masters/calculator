@@ -54,6 +54,10 @@ function triggerResult() {
 }
 
 function numberOrDecimalActivated(value) {
+    if (value == "." && inputView.textContent.includes(".")) {
+        return;
+    }
+
     if (inputView.textContent == "0" || inputView.textContent == "Error" ||
         (operator != "" && num2 == null) || resultDisplayed === true
     ) {
@@ -68,6 +72,34 @@ function numberOrDecimalActivated(value) {
     } else {
         num2 = Number(inputView.textContent);
     }
+}
+
+function operatorActivated(value) {
+    if (num1 != null ) {
+        if (num2 != null) {
+            triggerResult();
+        }
+        operator = value;
+    }
+}
+
+function deleteActivated() {
+    if (resultDisplayed) {
+        return;
+    }
+    
+    if (operator == "") {
+        num1 = Math.floor(num1 / 10);
+        inputView.textContent = num1;
+    } else {
+        num2 = Math.floor(num2 / 10);
+        inputView.textContent = num2;
+    }
+}
+
+function resultActivated() {
+    resultDisplayed = true;
+    triggerResult();
 }
 
 buttonsGrid.addEventListener("mouseover", e => {
@@ -95,30 +127,20 @@ buttonsGrid.addEventListener("mouseup", e => {
 });
 
 buttonsGrid.addEventListener("click", e => {
+
     if (e.target.classList.contains("button-number") ||
         e.target.classList.contains("button-decimal")) {
-
-        if (e.target.classList.contains("button-decimal") &&
-            inputView.textContent.includes(".")) {
-            return;
-        }
 
         numberOrDecimalActivated(e.target.textContent);
         
     }
 
     if (e.target.classList.contains("operator")) {
-        if (num1 != null ) {
-            if (num2 != null) {
-                triggerResult();
-            }
-            operator = e.target.textContent;
-        }
+        operatorActivated(e.target.textContent);
     }
 
     if (e.target.classList.contains("result")) {
-        resultDisplayed = true;
-        triggerResult();
+        resultActivated();
     }
 
     if (e.target.classList.contains("button-clear")) {
@@ -127,24 +149,28 @@ buttonsGrid.addEventListener("click", e => {
     }
 
     if (e.target.classList.contains("button-delete")) {
-        if (resultDisplayed) {
-            return;
-        }
-        
-        if (operator == "") {
-            num1 = Math.floor(num1 / 10);
-            inputView.textContent = num1;
-        } else {
-            num2 = Math.floor(num2 / 10);
-            inputView.textContent = num2;
-        }
+        deleteActivated();
     }
 });
 
 body.addEventListener("keydown", e => {
+
     if ("1234567890.".includes(e.key)) {
         numberOrDecimalActivated(e.key);
     }
+
+    if ("+-*/".includes(e.key)) {
+        operatorActivated(e.key);
+    }
+
+    if (e.key == "Backspace") {
+        deleteActivated();
+    }
+
+    if (e.key == "Enter") {
+        resultActivated();
+    }
+
     isKeyDown = true;
 });
 
